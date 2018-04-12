@@ -1,10 +1,19 @@
 FROM rocker/binder:3.4.2
+FROM jupyter/minimal-notebook
+
+LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 
 # Copy repo into ${HOME}, make user own $HOME
 USER root
 COPY . ${HOME}
 RUN chown -R ${NB_USER} ${HOME}
 USER ${NB_USER}
+
+# libav-tools for matplotlib anim
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends libav-tools libgmp-dev libmpfr-dev libgsl0-dev && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install Python 3 packages
 # Remove pyqt and qt pulled in for matplotlib since we're only ever going to
