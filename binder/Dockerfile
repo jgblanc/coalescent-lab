@@ -6,7 +6,6 @@ COPY . ${HOME}
 RUN chown -R ${NB_USER} ${HOME}
 USER ${NB_USER}
 
-https://raw.githubusercontent.com/binder-examples/dockerfile-rstudio/master/Dockerfile
 # Install Python 3 packages
 # Remove pyqt and qt pulled in for matplotlib since we're only ever going to
 # use notebook-friendly backends in these images
