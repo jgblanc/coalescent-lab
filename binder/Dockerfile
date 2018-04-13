@@ -40,9 +40,11 @@ RUN python3 -m venv ${VENV_DIR} && \
 RUN pip3 install msprime numpy scipy pandas matplotlib seaborn
 
 RUN R --quiet -e "devtools::install_github('IRkernel/IRkernel')" && \
+    R --quiet -e "install.packages('tidyverse')" && \
+    R --quiet -e "install.packages('rmarkdown')" && \
+    R --quiet -e "install.packages('reticulate')" && \
     R --quiet -e "IRkernel::installspec(prefix='${VENV_DIR}')"
 
-RUN if [ -f install.R ]; then R --quiet -f install.R; fi
 
 CMD jupyter notebook --ip 0.0.0.0
 
