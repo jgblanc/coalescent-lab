@@ -1,4 +1,4 @@
-FROM rocker/geospatial:3.4.2
+FROM rocker/geospatial:3.4.3
 
 ENV NB_USER rstudio
 ENV NB_UID 1000
@@ -17,7 +17,7 @@ ENV HOME /home/${NB_USER}
 WORKDIR ${HOME}
 
 RUN apt-get update && \
-    apt-get -y install pkg-config python3-venv python3-dev python-pip libgsl0-dev hdf5-tools libhdf5-serial-dev && \
+    apt-get -y install python3-venv python3-dev pkg-config libgsl0-dev hdf5-tools libhdf5-serial-dev && \
     apt-get purge && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -30,9 +30,9 @@ USER ${NB_USER}
 RUN python3 -m venv ${VENV_DIR} && \
     pip3 install --no-cache-dir \
          notebook==5.2 \
-         numpy \
- 	 scipy \
-         pandas \
+	 numpy \
+	 scipy \
+	 pandas \
 	 matplotlib \
 	 seaborn \
 	 msprime \
@@ -46,6 +46,7 @@ RUN python3 -m venv ${VENV_DIR} && \
 
 RUN R --quiet -e "devtools::install_github('IRkernel/IRkernel')" && \
     R --quiet -e "install.packages('tidyverse')" && \
+    R --quiet -e "install.packages('caTools')" && \
     R --quiet -e "install.packages('rmarkdown')" && \
     R --quiet -e "install.packages('reticulate')" && \
     R --quiet -e "IRkernel::installspec(prefix='${VENV_DIR}')"
