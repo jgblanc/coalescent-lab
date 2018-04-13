@@ -17,7 +17,7 @@ ENV HOME /home/${NB_USER}
 WORKDIR ${HOME}
 
 RUN apt-get update && \
-    apt-get -y install python3-venv python3-dev pkg-config libgsl0-dev hdf5-tools libhdf5-serial-dev && \
+    apt-get -y install python3-venv python3-dev pkg-config libgsl0-dev hdf5-tools libhdf5-serial-dev libreadline-dev && \
     apt-get purge && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
